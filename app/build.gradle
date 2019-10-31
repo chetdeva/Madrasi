@@ -30,18 +30,21 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation project(':domain')
+
+    implementation deps.build.kotlinStdlib
 
     implementation deps.androidx.appcompat
     implementation deps.external.dagger
     implementation deps.external.rxbinding
     implementation deps.build.guava
     compileOnly deps.apt.javax
+    kapt deps.apt.daggerCompiler
 
     implementation deps.uber.ribAndroid
     kapt deps.uber.ribCompilerTest
-    testImplementation deps.uber.ribTestUtils
 
+    testImplementation deps.uber.ribTestUtils
     testImplementation deps.test.junit
     androidTestImplementation deps.test.androidxTestRunner
 }

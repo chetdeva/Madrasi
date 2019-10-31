@@ -1,0 +1,13 @@
+apply plugin: 'java-library'
+apply plugin: 'kotlin'
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation deps.build.kotlinStdlib
+
+    implementation deps.external.rxjava2
+    implementation deps.external.rxrelay2
+}
+
+sourceCompatibility = "8"
+targetCompatibility = "8"
