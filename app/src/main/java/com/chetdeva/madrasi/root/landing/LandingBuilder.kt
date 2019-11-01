@@ -40,6 +40,7 @@ class LandingBuilder(dependency: ParentComponent) :
   }
 
   interface ParentComponent {
+    fun landingListener(): LandingInteractor.Listener
   }
 
   @dagger.Module
@@ -63,8 +64,6 @@ class LandingBuilder(dependency: ParentComponent) :
         return LandingRouter(view, interactor, component)
       }
     }
-
-    // TODO: Create provider methods for dependencies created by this Rib. These should be static.
   }
 
   @LandingScope

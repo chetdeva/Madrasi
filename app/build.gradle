@@ -35,6 +35,7 @@ dependencies {
     implementation deps.build.kotlinStdlib
 
     implementation deps.androidx.appcompat
+    implementation deps.androidx.recyclerview
     implementation deps.external.dagger
     implementation deps.external.rxbinding
     implementation deps.build.guava

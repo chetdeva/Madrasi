@@ -2,7 +2,7 @@ package com.chetdeva.madrasi.domain.entity.cart
 
 import java.math.BigDecimal
 
-data class Cart(val cartItems: ArrayList<CartItem>, val taxes: ArrayList<Tax>) {
+data class Cart(val cartItems: MutableList<CartItem>, val taxes: MutableList<Tax>) {
 
     val subTotal: BigDecimal
         get() = cartItems
