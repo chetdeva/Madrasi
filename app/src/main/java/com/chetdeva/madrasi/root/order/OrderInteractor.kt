@@ -1,22 +1,23 @@
 package com.chetdeva.madrasi.root.order
 
+import com.chetdeva.madrasi.domain.cart.CartManager
 import com.chetdeva.madrasi.domain.entity.cart.Cart
 import com.chetdeva.madrasi.domain.entity.menu.MenuId
+import com.chetdeva.madrasi.domain.entity.menu.MenuItem
 import com.chetdeva.madrasi.domain.entity.menu.PhoneNumber
+import com.chetdeva.madrasi.domain.entity.order.OrderId
+import com.chetdeva.madrasi.root.order.checkout.CheckoutInteractor
 import com.chetdeva.madrasi.root.order.menu.MenuInteractor
+import com.chetdeva.madrasi.root.order.thankyou.ThankYouInteractor
 import com.uber.rib.core.Bundle
 import com.uber.rib.core.EmptyPresenter
 import com.uber.rib.core.Interactor
 import com.uber.rib.core.RibInteractor
-import com.uber.rib.core.Router
-
 import javax.inject.Inject
 
 /**
  * Coordinates Business Logic for [OrderScope].
  */
-
-
 @RibInteractor
 class OrderInteractor : Interactor<EmptyPresenter, OrderRouter>() {
 
@@ -24,6 +25,10 @@ class OrderInteractor : Interactor<EmptyPresenter, OrderRouter>() {
 
   @Inject
   lateinit var phoneNumber: PhoneNumber
+  @Inject
+  lateinit var listener: Listener
+  @Inject
+  lateinit var cartManager: CartManager
 
   override fun didBecomeActive(savedInstanceState: Bundle?) {
     super.didBecomeActive(savedInstanceState)
@@ -31,10 +36,31 @@ class OrderInteractor : Interactor<EmptyPresenter, OrderRouter>() {
     router.attachMenu(MADRASI_MENU_ID)
   }
 
-  inner class MenuListener: MenuInteractor.Listener {
-    override fun onCheckoutClicked(cart: Cart) {
+  inner class MenuListener : MenuInteractor.Listener {
+    override fun checkout(cart: Cart) {
       router.detachMenu()
       router.attachCheckout(phoneNumber, cart)
     }
+  }
+
+  inner class CheckoutListener : CheckoutInteractor.Listener {
+    override fun checkout(orderId: OrderId) {
+      router.detachCheckout()
+      router.attachThankYou(phoneNumber, orderId)
+    }
+  }
+
+  inner class ThankYouListener : ThankYouInteractor.Listener {
+    override fun orderAgain() {
+      cartManager.clearCart()
+        .subscribe {
+          router.detachThankYou()
+          listener.orderAgain()
+        }
+    }
+  }
+
+  interface Listener {
+    fun orderAgain()
   }
 }

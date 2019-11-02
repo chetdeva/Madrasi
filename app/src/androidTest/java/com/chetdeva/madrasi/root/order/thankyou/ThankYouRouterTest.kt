@@ -1,4 +1,4 @@
-package com.chetdeva.madrasi.root.order.checkout
+package com.chetdeva.madrasi.root.order.thankyou
 
 import com.uber.rib.core.RibTestBasePlaceholder
 import com.uber.rib.core.RouterHelper
@@ -8,19 +8,19 @@ import org.junit.Test
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
 
-class CheckoutRouterTest : RibTestBasePlaceholder() {
+class ThankYouRouterTest : RibTestBasePlaceholder() {
 
-  @Mock internal lateinit var component: CheckoutBuilder.Component
-  @Mock internal lateinit var interactor: CheckoutInteractor
-  @Mock internal lateinit var view: CheckoutView
+  @Mock internal lateinit var component: ThankYouBuilder.Component
+  @Mock internal lateinit var interactor: ThankYouInteractor
+  @Mock internal lateinit var view: ThankYouView
 
-  private var router: CheckoutRouter? = null
+  private var router: ThankYouRouter? = null
 
   @Before
   fun setup() {
     MockitoAnnotations.initMocks(this)
 
-    router = CheckoutRouter(view, interactor, component,)
+    router = ThankYouRouter(view, interactor, component)
   }
 
   /**

@@ -7,4 +7,6 @@
     <string name="total">Total: </string>
     <string name="empty_phone_number_error">Phone Number cannot be empty</string>
     <string name="phone_number_hint">Phone Number</string>
+    <string name="thank_you">Thank You!</string>
+    <string name="order_id">Order Id:</string>
 </resources>

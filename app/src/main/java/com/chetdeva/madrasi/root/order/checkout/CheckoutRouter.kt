@@ -1,7 +1,5 @@
 package com.chetdeva.madrasi.root.order.checkout
 
-import android.view.View
-
 import com.uber.rib.core.ViewRouter
 
 /**
@@ -16,5 +14,4 @@ class CheckoutRouter(
   interactor,
   component
 ) {
-
 }

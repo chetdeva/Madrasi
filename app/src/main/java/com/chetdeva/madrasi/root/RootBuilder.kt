@@ -6,6 +6,7 @@ import com.chetdeva.madrasi.domain.IdleUserHandler
 import com.chetdeva.madrasi.root.onboarding.OnboardingBuilder
 import com.chetdeva.madrasi.root.onboarding.OnboardingInteractor
 import com.chetdeva.madrasi.root.order.OrderBuilder
+import com.chetdeva.madrasi.root.order.OrderInteractor
 import com.uber.rib.core.InteractorBaseComponent
 import com.uber.rib.core.ViewBuilder
 import dagger.Binds
@@ -77,8 +78,15 @@ class RootBuilder(dependency: ParentComponent) :
       @RootScope
       @Provides
       @JvmStatic
-      internal fun landingListener(rootInteractor: RootInteractor): OnboardingInteractor.Listener {
-        return rootInteractor.LandingListner()
+      internal fun onboardingListener(rootInteractor: RootInteractor): OnboardingInteractor.Listener {
+        return rootInteractor.OnboardingListener()
+      }
+
+      @RootScope
+      @Provides
+      @JvmStatic
+      internal fun orderListener(rootInteractor: RootInteractor): OrderInteractor.Listener {
+        return rootInteractor.OrderListener()
       }
     }
   }

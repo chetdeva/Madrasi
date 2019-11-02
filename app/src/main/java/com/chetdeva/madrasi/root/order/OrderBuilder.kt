@@ -1,26 +1,25 @@
 package com.chetdeva.madrasi.root.order
 
-import android.view.ViewGroup
 import com.chetdeva.madrasi.domain.cart.CartManager
 import com.chetdeva.madrasi.domain.cart.CartStream
 import com.chetdeva.madrasi.domain.cart.MutableCartStream
 import com.chetdeva.madrasi.domain.entity.menu.PhoneNumber
 import com.chetdeva.madrasi.root.RootView
 import com.chetdeva.madrasi.root.order.checkout.CheckoutBuilder
+import com.chetdeva.madrasi.root.order.checkout.CheckoutInteractor
 import com.chetdeva.madrasi.root.order.menu.MenuBuilder
 import com.chetdeva.madrasi.root.order.menu.MenuInteractor
+import com.chetdeva.madrasi.root.order.thankyou.ThankYouBuilder
+import com.chetdeva.madrasi.root.order.thankyou.ThankYouInteractor
 import com.uber.rib.core.Builder
 import com.uber.rib.core.EmptyPresenter
 import com.uber.rib.core.InteractorBaseComponent
+import dagger.BindsInstance
+import dagger.Provides
 import java.lang.annotation.Retention
-
+import java.lang.annotation.RetentionPolicy.CLASS
 import javax.inject.Qualifier
 import javax.inject.Scope
-
-import dagger.Provides
-import dagger.BindsInstance
-
-import java.lang.annotation.RetentionPolicy.CLASS
 
 class OrderBuilder(dependency: ParentComponent) :
   Builder<OrderRouter, OrderBuilder.ParentComponent>(dependency) {
@@ -43,6 +42,7 @@ class OrderBuilder(dependency: ParentComponent) :
 
   interface ParentComponent {
     fun rootView(): RootView
+    fun orderListener(): OrderInteractor.Listener
   }
 
   @dagger.Module
@@ -89,6 +89,20 @@ class OrderBuilder(dependency: ParentComponent) :
       @OrderScope
       @Provides
       @JvmStatic
+      internal fun checkoutListener(orderInteractor: OrderInteractor): CheckoutInteractor.Listener {
+        return orderInteractor.CheckoutListener()
+      }
+
+      @OrderScope
+      @Provides
+      @JvmStatic
+      internal fun thankYouListener(orderInteractor: OrderInteractor): ThankYouInteractor.Listener {
+        return orderInteractor.ThankYouListener()
+      }
+
+      @OrderScope
+      @Provides
+      @JvmStatic
       internal fun router(
         component: Component,
         interactor: OrderInteractor,
@@ -99,7 +113,8 @@ class OrderBuilder(dependency: ParentComponent) :
           component,
           rootView,
           MenuBuilder(component),
-          CheckoutBuilder(component)
+          CheckoutBuilder(component),
+          ThankYouBuilder(component)
         )
       }
     }
@@ -108,7 +123,7 @@ class OrderBuilder(dependency: ParentComponent) :
   @OrderScope
   @dagger.Component(modules = [Module::class], dependencies = [ParentComponent::class])
   interface Component : InteractorBaseComponent<OrderInteractor>, BuilderComponent,
-    MenuBuilder.ParentComponent, CheckoutBuilder.ParentComponent {
+    MenuBuilder.ParentComponent, CheckoutBuilder.ParentComponent, ThankYouBuilder.ParentComponent {
 
     @dagger.Component.Builder
     interface Builder {
@@ -121,7 +136,6 @@ class OrderBuilder(dependency: ParentComponent) :
       fun parentComponent(component: ParentComponent): Builder
       fun build(): Component
     }
-
   }
 
   interface BuilderComponent {

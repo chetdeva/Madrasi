@@ -4,10 +4,13 @@ import android.view.ViewGroup
 import com.chetdeva.madrasi.domain.entity.cart.Cart
 import com.chetdeva.madrasi.domain.entity.menu.MenuId
 import com.chetdeva.madrasi.domain.entity.menu.PhoneNumber
+import com.chetdeva.madrasi.domain.entity.order.OrderId
 import com.chetdeva.madrasi.root.order.checkout.CheckoutBuilder
 import com.chetdeva.madrasi.root.order.checkout.CheckoutRouter
 import com.chetdeva.madrasi.root.order.menu.MenuBuilder
 import com.chetdeva.madrasi.root.order.menu.MenuRouter
+import com.chetdeva.madrasi.root.order.thankyou.ThankYouBuilder
+import com.chetdeva.madrasi.root.order.thankyou.ThankYouRouter
 import com.uber.rib.core.Router
 
 /**
@@ -18,11 +21,13 @@ class OrderRouter(
   component: OrderBuilder.Component,
   private val parentView: ViewGroup,
   private val menuBuilder: MenuBuilder,
-  private val checkoutBuilder: CheckoutBuilder
+  private val checkoutBuilder: CheckoutBuilder,
+  private val thankYouBuilder: ThankYouBuilder
 ) : Router<OrderInteractor, OrderBuilder.Component>(interactor, component) {
 
   private var menuRouter: MenuRouter? = null
   private var checkoutRouter: CheckoutRouter? = null
+  private var thankYouRouter: ThankYouRouter? = null
 
   internal fun attachMenu(menuId: MenuId) {
     menuRouter = menuBuilder.build(parentView, menuId)
@@ -49,6 +54,20 @@ class OrderRouter(
       detachChild(checkoutRouter)
       parentView.removeView(checkoutRouter!!.view)
       checkoutRouter = null
+    }
+  }
+
+  internal fun attachThankYou(phoneNumber: PhoneNumber, orderId: OrderId) {
+    thankYouRouter = thankYouBuilder.build(parentView, phoneNumber, orderId)
+    attachChild(thankYouRouter)
+    parentView.addView(thankYouRouter!!.view)
+  }
+
+  internal fun detachThankYou() {
+    if (thankYouRouter != null) {
+      detachChild(thankYouRouter)
+      parentView.removeView(thankYouRouter!!.view)
+      thankYouRouter = null
     }
   }
 }

@@ -4,6 +4,7 @@ import com.chetdeva.madrasi.domain.cart.CartManager
 import com.chetdeva.madrasi.domain.cart.CartStream
 import com.chetdeva.madrasi.domain.entity.cart.Cart
 import com.chetdeva.madrasi.domain.entity.cart.CartItem
+import com.chetdeva.madrasi.domain.entity.cart.CartResult
 import com.chetdeva.madrasi.domain.entity.menu.MenuCategory
 import com.chetdeva.madrasi.domain.entity.menu.MenuId
 import com.chetdeva.madrasi.domain.entity.menu.MenuItem
@@ -48,14 +49,19 @@ class MenuInteractor : Interactor<MenuInteractor.MenuPresenter, MenuRouter>() {
       .flatMapSingle { cartManager.addItem(CartItem(it, 1)) }
       .observeOn(AndroidSchedulers.mainThread())
       .subscribe {
-        presenter.showMessage("success")
+        when (it) {
+          is CartResult.AddItemSuccess -> presenter.showMessage(it.cartItem.menuItem.name + " added")
+          is CartResult.AddItemError -> presenter.showMessage(it.error.message ?: "")
+          is CartResult.UpdateItemSuccess -> presenter.showMessage(it.cartItem.menuItem.name + " updated")
+          is CartResult.UpdateItemError -> presenter.showMessage(it.error.message ?: "")
+        }
       }
 
     presenter.checkoutClicks
       .flatMap { cartStream.getCart() }
       .observeOn(AndroidSchedulers.mainThread())
       .subscribe {
-        listener.onCheckoutClicked(it)
+        listener.checkout(it)
       }
   }
 
@@ -70,6 +76,6 @@ class MenuInteractor : Interactor<MenuInteractor.MenuPresenter, MenuRouter>() {
   }
 
   interface Listener {
-    fun onCheckoutClicked(cart: Cart)
+    fun checkout(cart: Cart)
   }
 }

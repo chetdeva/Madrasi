@@ -15,6 +15,7 @@ import com.chetdeva.madrasi.domain.entity.menu.MenuCategory
 import com.chetdeva.madrasi.domain.entity.menu.MenuItem
 import com.chetdeva.madrasi.root.order.menu.MenuAdapterHelper.createGroups
 import com.chetdeva.madrasi.root.order.menu.groupieitem.MenuItemGItem
+import com.google.android.material.snackbar.Snackbar
 import com.jakewharton.rxrelay2.PublishRelay
 import com.jakewharton.rxrelay2.Relay
 import com.xwray.groupie.GroupAdapter
@@ -65,11 +66,12 @@ class MenuView @JvmOverloads constructor(
     menuAdapter.addAll(groups)
   }
 
-  override fun showMessage(message: String) {
-  }
-
   fun getMenuToolbarContainer(): FrameLayout {
     return menuToolbarContainer
+  }
+
+  override fun showMessage(message: String) {
+    Snackbar.make(this, message, Snackbar.LENGTH_SHORT).show()
   }
 
   companion object {

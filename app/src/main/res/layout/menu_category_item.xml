@@ -11,7 +11,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:padding="16dp"
+        android:padding="8dp"
+        android:layout_marginStart="8dp"
         android:textColor="@android:color/white"
         android:textStyle="bold"
         tools:text="Food" />
@@ -20,7 +21,8 @@
         android:id="@+id/arrow_imageview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="16dp"
+        android:padding="8dp"
+        android:layout_marginEnd="8dp"
         android:tint="@android:color/white"
         android:src="@drawable/ic_keyboard_arrow_up_black_24dp" />
 

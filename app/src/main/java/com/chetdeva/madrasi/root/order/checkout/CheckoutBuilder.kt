@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.chetdeva.madrasi.domain.entity.cart.Cart
 import com.chetdeva.madrasi.domain.entity.menu.PhoneNumber
+import com.chetdeva.madrasi.root.order.thankyou.ThankYouBuilder
 import com.uber.rib.core.InteractorBaseComponent
 import com.uber.rib.core.ViewBuilder
 import dagger.Binds
@@ -50,7 +51,7 @@ class CheckoutBuilder(dependency: ParentComponent) :
   }
 
   interface ParentComponent {
-    // TODO: Define dependencies required from your parent interactor here.
+    fun checkoutListener(): CheckoutInteractor.Listener
   }
 
   @dagger.Module
@@ -73,16 +74,18 @@ class CheckoutBuilder(dependency: ParentComponent) :
       ): CheckoutRouter {
         return CheckoutRouter(view, interactor, component)
       }
-    }
 
-    // TODO: Create provider methods for dependencies created by this Rib. These should be static.
+      @CheckoutScope
+      @Provides
+      @JvmStatic
+      internal fun checkoutManager(phoneNumber: PhoneNumber, cart: Cart): CheckoutManager {
+        return CheckoutManager(phoneNumber, cart)
+      }
+    }
   }
 
   @CheckoutScope
-  @dagger.Component(
-    modules = arrayOf(Module::class),
-    dependencies = arrayOf(ParentComponent::class)
-  )
+  @dagger.Component(modules = [Module::class], dependencies = [ParentComponent::class])
   interface Component : InteractorBaseComponent<CheckoutInteractor>, BuilderComponent {
 
     @dagger.Component.Builder

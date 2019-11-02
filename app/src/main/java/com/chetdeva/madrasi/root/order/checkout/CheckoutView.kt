@@ -4,12 +4,16 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.chetdeva.madrasi.R
 import com.chetdeva.madrasi.domain.entity.cart.CartItem
+import com.jakewharton.rxrelay2.PublishRelay
+import com.jakewharton.rxrelay2.Relay
+import io.reactivex.Observable
 
 /**
  * Top level view for {@link CheckoutBuilder.CheckoutScope}.
@@ -23,6 +27,11 @@ class CheckoutView @JvmOverloads constructor(
   private lateinit var phoneNumberTextView: TextView
   private lateinit var cartItemsRecyclerView: RecyclerView
   private lateinit var totalTextView: TextView
+  private lateinit var payButton: Button
+
+  private val _payButtonClickRelay: Relay<Unit> = PublishRelay.create()
+  override val payButtonClicks: Observable<Unit>
+    get() = _payButtonClickRelay
 
   private val cartItemsAdapter: CartItemsAdapter by lazy { CartItemsAdapter(mutableListOf()) }
 
@@ -32,6 +41,9 @@ class CheckoutView @JvmOverloads constructor(
     phoneNumberTextView = findViewById(R.id.phone_number_textview)
     cartItemsRecyclerView = findViewById(R.id.cart_items_recyclerview)
     totalTextView = findViewById(R.id.total_textview)
+    payButton = findViewById(R.id.pay_button)
+
+    payButton.setOnClickListener { _payButtonClickRelay.accept(Unit) }
 
     cartItemsRecyclerView.layoutManager = LinearLayoutManager(context)
     cartItemsRecyclerView.adapter = cartItemsAdapter

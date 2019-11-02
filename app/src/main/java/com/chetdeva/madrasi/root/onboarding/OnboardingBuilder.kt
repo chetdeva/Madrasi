@@ -40,7 +40,7 @@ class OnboardingBuilder(dependency: ParentComponent) :
   }
 
   interface ParentComponent {
-    fun landingListener(): OnboardingInteractor.Listener
+    fun onboardingListener(): OnboardingInteractor.Listener
   }
 
   @dagger.Module

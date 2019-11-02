@@ -3,6 +3,7 @@ package com.chetdeva.madrasi.domain.cart
 import com.chetdeva.madrasi.domain.entity.cart.Cart
 import com.chetdeva.madrasi.domain.entity.cart.CartItem
 import com.chetdeva.madrasi.domain.entity.cart.CartResult
+import io.reactivex.Completable
 import io.reactivex.Single
 
 val EMPTY_CART: Cart = Cart(ArrayList(), ArrayList())
@@ -44,5 +45,11 @@ class CartManager(
       )
     }
       .doOnSuccess { mutableCartStream.update(cart) }
+  }
+
+  fun clearCart(): Completable {
+    return Completable.fromAction {
+      CartCalculator.clearCart(cart)
+    }
   }
 }
