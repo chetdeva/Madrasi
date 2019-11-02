@@ -22,7 +22,7 @@ import javax.inject.Inject
 @RibInteractor
 class OrderInteractor : Interactor<EmptyPresenter, OrderRouter>() {
 
-  private val MADRASI_MENU_Info: MenuInfo = MenuInfo("madrasi123")
+  private val MADRASI_MENU_Info: MenuInfo = MenuInfo("madrasiMasala")
   private val disposable: CompositeDisposable by lazy { CompositeDisposable() }
 
   @Inject
@@ -51,7 +51,7 @@ class OrderInteractor : Interactor<EmptyPresenter, OrderRouter>() {
   }
 
   inner class CheckoutListener : CheckoutInteractor.Listener {
-    override fun checkout(orderInfo: OrderInfo) {
+    override fun paymentDone(orderInfo: OrderInfo) {
       cartManager.clearCart()
         .subscribe {
           router.detachCheckout()

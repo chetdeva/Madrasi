@@ -38,7 +38,7 @@ class CheckoutInteractor : Interactor<CheckoutInteractor.CheckoutPresenter, Chec
 
     presenter.payButtonClicks
       .flatMapSingle { checkoutManager.checkout(DEFAULT_PAYMENT_METHOD) }
-      .subscribe(listener::checkout)
+      .subscribe(listener::paymentDone)
   }
 
   /**
@@ -52,6 +52,6 @@ class CheckoutInteractor : Interactor<CheckoutInteractor.CheckoutPresenter, Chec
   }
 
   interface Listener {
-    fun checkout(orderInfo: OrderInfo)
+    fun paymentDone(orderInfo: OrderInfo)
   }
 }

@@ -10,7 +10,7 @@ class MenuStore {
   val menu: Menu by lazy { createMenu() }
 
   private fun createMenu(): Menu {
-    return Menu("madrasi123", "Madrasi", createMenuCategories())
+    return Menu("madrasiMasala", "Madrasi", createMenuCategories())
   }
 
   private fun createMenuCategories(): List<MenuCategory> {
@@ -37,9 +37,9 @@ class MenuStore {
 
   private fun createSnacksMenuItems(): List<MenuItem> {
     return listOf(
-      MenuItem("111", "11", "Masala Idli", 90.toBigDecimal()),
-      MenuItem("112", "11", "Sambar Idli", 70.toBigDecimal()),
-      MenuItem("113", "11", "Dahi Idli", 80.toBigDecimal())
+      MenuItem("111", "11", "Masala Idli", 80.toBigDecimal()),
+      MenuItem("112", "11", "Sambar Idli", 60.toBigDecimal()),
+      MenuItem("113", "11", "Dahi Idli", 70.toBigDecimal())
     )
   }
 
@@ -62,8 +62,7 @@ class MenuStore {
     return listOf(
       MenuItem("211", "21", "Badam Milk", 60.toBigDecimal()),
       MenuItem("212", "21", "Masala Butter Milk", 50.toBigDecimal()),
-      MenuItem("213", "21", "Madrasi Tea", 40.toBigDecimal()),
-      MenuItem("214", "21", "Madrasi Coffee", 50.toBigDecimal())
+      MenuItem("213", "21", "Madrasi Tea", 40.toBigDecimal())
     )
   }
 }
