@@ -1,6 +1,8 @@
 package com.chetdeva.madrasi.root
 
-import com.chetdeva.madrasi.root.landing.LandingInteractor
+import android.widget.Toast
+import com.chetdeva.madrasi.domain.entity.menu.PhoneNumber
+import com.chetdeva.madrasi.root.onboarding.OnboardingInteractor
 import com.uber.rib.core.Bundle
 import com.uber.rib.core.Interactor
 import com.uber.rib.core.RibInteractor
@@ -18,13 +20,13 @@ class RootInteractor : Interactor<RootInteractor.RootPresenter, RootRouter>() {
   override fun didBecomeActive(savedInstanceState: Bundle?) {
     super.didBecomeActive(savedInstanceState)
 
-    router.attachLanding()
+    router.attachOnboarding()
   }
 
-  inner class LandingListner: LandingInteractor.Listener {
-    override fun order() {
-      router.detachLanding()
-      router.attachOrder()
+  inner class LandingListner : OnboardingInteractor.Listener {
+    override fun order(phoneNumber: PhoneNumber) {
+      router.detachOnboarding()
+      router.attachOrder(phoneNumber)
     }
   }
 

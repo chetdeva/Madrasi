@@ -1,7 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.chetdeva.madrasi.root.order.checkout.CheckoutView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
+        android:gravity="center"
+        android:text="@string/order_for"
+        android:padding="16dp" />
+
+    <TextView
+        android:id="@+id/phone_number_textview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
+        android:gravity="center"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:padding="16dp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/cart_items_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/black"
+            android:gravity="center"
+            android:text="@string/total"
+            android:padding="16dp" />
+
+        <TextView
+            android:id="@+id/total_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/black"
+            android:gravity="center"
+            android:padding="16dp" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/pay_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/white"
+        android:text="@string/pay"
+        android:background="@android:color/black"
+        android:layout_margin="16dp" />
 
 </com.chetdeva.madrasi.root.order.checkout.CheckoutView>
 

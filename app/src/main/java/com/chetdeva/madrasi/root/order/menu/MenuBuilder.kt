@@ -2,9 +2,12 @@ package com.chetdeva.madrasi.root.order.menu
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import com.chetdeva.madrasi.domain.cart.CartManager
+import com.chetdeva.madrasi.domain.cart.CartStream
 import com.chetdeva.madrasi.domain.entity.menu.MenuId
 import com.chetdeva.madrasi.domain.repository.MenuRepository
 import com.chetdeva.madrasi.domain.repository.MenuStore
+import com.chetdeva.madrasi.root.order.menu.menutoolbar.MenuToolbarBuilder
 import com.uber.rib.core.InteractorBaseComponent
 import com.uber.rib.core.ViewBuilder
 import dagger.Binds
@@ -18,7 +21,8 @@ import javax.inject.Scope
 /**
  * Builder for the {@link MenuScope}.
  */
-class MenuBuilder(dependency: ParentComponent) : ViewBuilder<MenuView, MenuRouter, MenuBuilder.ParentComponent>(dependency) {
+class MenuBuilder(dependency: ParentComponent) :
+  ViewBuilder<MenuView, MenuRouter, MenuBuilder.ParentComponent>(dependency) {
 
   /**
    * Builds a new [MenuRouter].
@@ -30,11 +34,11 @@ class MenuBuilder(dependency: ParentComponent) : ViewBuilder<MenuView, MenuRoute
     val view = createView(parentViewGroup)
     val interactor = MenuInteractor()
     val component = DaggerMenuBuilder_Component.builder()
-        .parentComponent(dependency)
-        .view(view)
-        .interactor(interactor)
-        .menuId(menuId)
-        .build()
+      .parentComponent(dependency)
+      .view(view)
+      .interactor(interactor)
+      .menuId(menuId)
+      .build()
     return component.menuRouter()
   }
 
@@ -43,6 +47,9 @@ class MenuBuilder(dependency: ParentComponent) : ViewBuilder<MenuView, MenuRoute
   }
 
   interface ParentComponent {
+    fun cartStream(): CartStream
+    fun cartManager(): CartManager
+    fun menuListener(): MenuInteractor.Listener
   }
 
   @dagger.Module
@@ -59,10 +66,11 @@ class MenuBuilder(dependency: ParentComponent) : ViewBuilder<MenuView, MenuRoute
       @Provides
       @JvmStatic
       internal fun router(
-          component: Component,
-          view: MenuView,
-          interactor: MenuInteractor): MenuRouter {
-        return MenuRouter(view, interactor, component)
+        component: Component,
+        view: MenuView,
+        interactor: MenuInteractor
+      ): MenuRouter {
+        return MenuRouter(view, interactor, component, MenuToolbarBuilder(component))
       }
 
       @MenuScope
@@ -76,7 +84,8 @@ class MenuBuilder(dependency: ParentComponent) : ViewBuilder<MenuView, MenuRoute
 
   @MenuScope
   @dagger.Component(modules = [Module::class], dependencies = [ParentComponent::class])
-  interface Component : InteractorBaseComponent<MenuInteractor>, BuilderComponent {
+  interface Component : InteractorBaseComponent<MenuInteractor>, BuilderComponent,
+    MenuToolbarBuilder.ParentComponent {
 
     @dagger.Component.Builder
     interface Builder {

@@ -3,8 +3,8 @@ package com.chetdeva.madrasi.root
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.chetdeva.madrasi.domain.IdleUserHandler
-import com.chetdeva.madrasi.root.landing.LandingBuilder
-import com.chetdeva.madrasi.root.landing.LandingInteractor
+import com.chetdeva.madrasi.root.onboarding.OnboardingBuilder
+import com.chetdeva.madrasi.root.onboarding.OnboardingInteractor
 import com.chetdeva.madrasi.root.order.OrderBuilder
 import com.uber.rib.core.InteractorBaseComponent
 import com.uber.rib.core.ViewBuilder
@@ -69,7 +69,7 @@ class RootBuilder(dependency: ParentComponent) :
           view,
           interactor,
           component,
-          LandingBuilder(component),
+          OnboardingBuilder(component),
           OrderBuilder(component)
         )
       }
@@ -77,7 +77,7 @@ class RootBuilder(dependency: ParentComponent) :
       @RootScope
       @Provides
       @JvmStatic
-      internal fun landingListener(rootInteractor: RootInteractor): LandingInteractor.Listener {
+      internal fun landingListener(rootInteractor: RootInteractor): OnboardingInteractor.Listener {
         return rootInteractor.LandingListner()
       }
     }
@@ -86,7 +86,7 @@ class RootBuilder(dependency: ParentComponent) :
   @RootScope
   @dagger.Component(modules = [Module::class], dependencies = [ParentComponent::class])
   interface Component : InteractorBaseComponent<RootInteractor>, BuilderComponent,
-    LandingBuilder.ParentComponent, OrderBuilder.ParentComponent {
+    OnboardingBuilder.ParentComponent, OrderBuilder.ParentComponent {
 
     @dagger.Component.Builder
     interface Builder {

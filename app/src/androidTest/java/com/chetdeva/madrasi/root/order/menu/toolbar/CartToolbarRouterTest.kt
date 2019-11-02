@@ -1,4 +1,4 @@
-package com.chetdeva.madrasi.root.landing
+package com.chetdeva.madrasi.root.order.menu.toolbar
 
 import com.uber.rib.core.RibTestBasePlaceholder
 import com.uber.rib.core.RouterHelper
@@ -8,19 +8,19 @@ import org.junit.Test
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
 
-class LandingRouterTest : RibTestBasePlaceholder() {
+class CartToolbarRouterTest : RibTestBasePlaceholder() {
 
-  @Mock internal lateinit var component: LandingBuilder.Component
-  @Mock internal lateinit var interactor: LandingInteractor
-  @Mock internal lateinit var view: LandingView
+  @Mock internal lateinit var component: CartToolbarBuilder.Component
+  @Mock internal lateinit var interactor: CartToolbarInteractor
+  @Mock internal lateinit var view: CartToolbarView
 
-  private var router: LandingRouter? = null
+  private var router: CartToolbarRouter? = null
 
   @Before
   fun setup() {
     MockitoAnnotations.initMocks(this)
 
-    router = LandingRouter(view, interactor, component)
+    router = CartToolbarRouter(view, interactor, component)
   }
 
   /**

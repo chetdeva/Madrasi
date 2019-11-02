@@ -1,4 +1,4 @@
-package com.chetdeva.madrasi.root.landing
+package com.chetdeva.madrasi.root.onboarding
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -15,19 +15,19 @@ import javax.inject.Scope
 /**
  * Builder for the {@link LandingScope}.
  */
-class LandingBuilder(dependency: ParentComponent) :
-  ViewBuilder<LandingView, LandingRouter, LandingBuilder.ParentComponent>(dependency) {
+class OnboardingBuilder(dependency: ParentComponent) :
+  ViewBuilder<OnboardingView, OnboardingRouter, OnboardingBuilder.ParentComponent>(dependency) {
 
   /**
-   * Builds a new [LandingRouter].
+   * Builds a new [OnboardingRouter].
    *
    * @param parentViewGroup parent view group that this router's view will be added to.
-   * @return a new [LandingRouter].
+   * @return a new [OnboardingRouter].
    */
-  fun build(parentViewGroup: ViewGroup): LandingRouter {
+  fun build(parentViewGroup: ViewGroup): OnboardingRouter {
     val view = createView(parentViewGroup)
-    val interactor = LandingInteractor()
-    val component = DaggerLandingBuilder_Component.builder()
+    val interactor = OnboardingInteractor()
+    val component = DaggerOnboardingBuilder_Component.builder()
       .parentComponent(dependency)
       .view(view)
       .interactor(interactor)
@@ -35,12 +35,12 @@ class LandingBuilder(dependency: ParentComponent) :
     return component.landingRouter()
   }
 
-  override fun inflateView(inflater: LayoutInflater, parentViewGroup: ViewGroup): LandingView? {
-    return LandingView.inflate(inflater, parentViewGroup)
+  override fun inflateView(inflater: LayoutInflater, parentViewGroup: ViewGroup): OnboardingView? {
+    return OnboardingView.inflate(inflater, parentViewGroup)
   }
 
   interface ParentComponent {
-    fun landingListener(): LandingInteractor.Listener
+    fun landingListener(): OnboardingInteractor.Listener
   }
 
   @dagger.Module
@@ -48,7 +48,7 @@ class LandingBuilder(dependency: ParentComponent) :
 
     @LandingScope
     @Binds
-    internal abstract fun presenter(view: LandingView): LandingInteractor.LandingPresenter
+    internal abstract fun presenter(view: OnboardingView): OnboardingInteractor.LandingPresenter
 
     @dagger.Module
     companion object {
@@ -58,25 +58,25 @@ class LandingBuilder(dependency: ParentComponent) :
       @JvmStatic
       internal fun router(
         component: Component,
-        view: LandingView,
-        interactor: LandingInteractor
-      ): LandingRouter {
-        return LandingRouter(view, interactor, component)
+        view: OnboardingView,
+        interactor: OnboardingInteractor
+      ): OnboardingRouter {
+        return OnboardingRouter(view, interactor, component)
       }
     }
   }
 
   @LandingScope
   @dagger.Component(modules = [Module::class], dependencies = [ParentComponent::class])
-  interface Component : InteractorBaseComponent<LandingInteractor>, BuilderComponent {
+  interface Component : InteractorBaseComponent<OnboardingInteractor>, BuilderComponent {
 
     @dagger.Component.Builder
     interface Builder {
       @BindsInstance
-      fun interactor(interactor: LandingInteractor): Builder
+      fun interactor(interactor: OnboardingInteractor): Builder
 
       @BindsInstance
-      fun view(view: LandingView): Builder
+      fun view(view: OnboardingView): Builder
 
       fun parentComponent(component: ParentComponent): Builder
       fun build(): Component
@@ -84,7 +84,7 @@ class LandingBuilder(dependency: ParentComponent) :
   }
 
   interface BuilderComponent {
-    fun landingRouter(): LandingRouter
+    fun landingRouter(): OnboardingRouter
   }
 
   @Scope

@@ -1,5 +1,6 @@
-package com.chetdeva.madrasi.root.landing
+package com.chetdeva.madrasi.root.onboarding
 
+import com.chetdeva.madrasi.domain.entity.menu.PhoneNumber
 import com.uber.rib.core.Bundle
 import com.uber.rib.core.Interactor
 import com.uber.rib.core.RibInteractor
@@ -10,7 +11,7 @@ import javax.inject.Inject
  * Coordinates Business Logic for [LandingScope].
  */
 @RibInteractor
-class LandingInteractor : Interactor<LandingInteractor.LandingPresenter, LandingRouter>() {
+class OnboardingInteractor : Interactor<OnboardingInteractor.LandingPresenter, OnboardingRouter>() {
 
   @Inject
   lateinit var presenter: LandingPresenter
@@ -22,15 +23,22 @@ class LandingInteractor : Interactor<LandingInteractor.LandingPresenter, Landing
 
     presenter.orderClicks
       .subscribe {
-        listener.order()
+        if (it.isNotBlank()) {
+          listener.order(PhoneNumber(it))
+        } else {
+          presenter.showEmptyPhoneNumberErrorMessage()
+        }
       }
   }
 
   interface Listener {
-    fun order()
+    fun order(phoneNumber: PhoneNumber)
   }
 
   interface LandingPresenter {
-    val orderClicks: Observable<Unit>
+    fun showEmptyPhoneNumberErrorMessage()
+
+    val orderClicks: Observable<String>
+
   }
 }

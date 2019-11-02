@@ -1,4 +1,4 @@
-package com.chetdeva.madrasi.root.landing;
+package com.chetdeva.madrasi.root.onboarding;
 
 import com.ubercab.test.UberTestBase;
 import com.uber.rib.core.RouterHelper;
@@ -8,19 +8,19 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-public class LandingRouterTest extends UberTestBase {
+public class OnboardingRouterTest extends UberTestBase {
 
   @Mock private LandingScope scope;
-  @Mock private LandingInteractor interactor;
-  @Mock private LandingView view;
+  @Mock private OnboardingInteractor interactor;
+  @Mock private OnboardingView view;
 
-  private LandingRouter router;
+  private OnboardingRouter router;
 
   @Before
   public void setup() {
     MockitoAnnotations.initMocks(this);
 
-    router = new LandingRouter(scope, view, interactor);
+    router = new OnboardingRouter(scope, view, interactor);
   }
 
   /**

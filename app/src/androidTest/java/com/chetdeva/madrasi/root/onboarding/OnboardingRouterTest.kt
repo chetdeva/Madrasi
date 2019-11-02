@@ -1,4 +1,4 @@
-package com.chetdeva.madrasi.root.order.menu
+package com.chetdeva.madrasi.root.onboarding
 
 import com.uber.rib.core.RibTestBasePlaceholder
 import com.uber.rib.core.RouterHelper
@@ -8,19 +8,19 @@ import org.junit.Test
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
 
-class MenuCategoryRouterTest : RibTestBasePlaceholder() {
+class OnboardingRouterTest : RibTestBasePlaceholder() {
 
-  @Mock internal lateinit var component: MenuBuilder.Component
-  @Mock internal lateinit var interactor: MenuInteractor
-  @Mock internal lateinit var view: MenuView
+  @Mock internal lateinit var component: OnboardingBuilder.Component
+  @Mock internal lateinit var interactor: OnboardingInteractor
+  @Mock internal lateinit var view: OnboardingView
 
-  private var router: MenuRouter? = null
+  private var router: OnboardingRouter? = null
 
   @Before
   fun setup() {
     MockitoAnnotations.initMocks(this)
 
-    router = MenuRouter(view, interactor, component,)
+    router = OnboardingRouter(view, interactor, component)
   }
 
   /**

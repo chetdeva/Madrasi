@@ -1,7 +1,8 @@
 package com.chetdeva.madrasi.root
 
-import com.chetdeva.madrasi.root.landing.LandingBuilder
-import com.chetdeva.madrasi.root.landing.LandingRouter
+import com.chetdeva.madrasi.domain.entity.menu.PhoneNumber
+import com.chetdeva.madrasi.root.onboarding.OnboardingBuilder
+import com.chetdeva.madrasi.root.onboarding.OnboardingRouter
 import com.chetdeva.madrasi.root.order.OrderBuilder
 import com.chetdeva.madrasi.root.order.OrderRouter
 
@@ -14,29 +15,29 @@ class RootRouter(
   view: RootView,
   interactor: RootInteractor,
   component: RootBuilder.Component,
-  private val landingBuilder: LandingBuilder,
+  private val onboardingBuilder: OnboardingBuilder,
   private val orderBuilder: OrderBuilder
 ) : ViewRouter<RootView, RootInteractor, RootBuilder.Component>(view, interactor, component) {
 
-  private var landingRouter: LandingRouter? = null
+  private var onboardingRouter: OnboardingRouter? = null
   private var orderRouter: OrderRouter? = null
 
-  internal fun attachLanding() {
-    landingRouter = landingBuilder.build(view)
-    attachChild(landingRouter)
-    view.addView(landingRouter!!.view)
+  internal fun attachOnboarding() {
+    onboardingRouter = onboardingBuilder.build(view)
+    attachChild(onboardingRouter)
+    view.addView(onboardingRouter!!.view)
   }
 
-  internal fun detachLanding() {
-    if (landingRouter != null) {
-      detachChild(landingRouter)
-      view.removeView(landingRouter!!.view)
-      landingRouter = null
+  internal fun detachOnboarding() {
+    if (onboardingRouter != null) {
+      detachChild(onboardingRouter)
+      view.removeView(onboardingRouter!!.view)
+      onboardingRouter = null
     }
   }
 
-  internal fun attachOrder() {
-    orderRouter = orderBuilder.build(view)
+  internal fun attachOrder(phoneNumber: PhoneNumber) {
+    orderRouter = orderBuilder.build(phoneNumber)
     attachChild(orderRouter)
   }
 

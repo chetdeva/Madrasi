@@ -1,4 +1,4 @@
-package com.chetdeva.madrasi.root.landing
+package com.chetdeva.madrasi.root.order.menu.menutoolbar
 
 import com.uber.rib.core.RibTestBasePlaceholder
 import com.uber.rib.core.InteractorHelper
@@ -8,18 +8,18 @@ import org.junit.Test
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
 
-class LandingInteractorTest : RibTestBasePlaceholder() {
+class MenuToolbarInteractorTest : RibTestBasePlaceholder() {
 
-  @Mock internal lateinit var presenter: LandingInteractor.LandingPresenter
-  @Mock internal lateinit var router: LandingRouter
+  @Mock internal lateinit var presenter: MenuToolbarInteractor.MenuToolbarPresenter
+  @Mock internal lateinit var router: MenuToolbarRouter
 
-  private var interactor: LandingInteractor? = null
+  private var interactor: MenuToolbarInteractor? = null
 
   @Before
   fun setup() {
     MockitoAnnotations.initMocks(this)
 
-    interactor = TestLandingInteractor.create(presenter)
+    interactor = TestMenuToolbarInteractor.create(presenter)
   }
 
   /**
@@ -28,7 +28,7 @@ class LandingInteractorTest : RibTestBasePlaceholder() {
   @Test
   fun anExampleTest_withSomeConditions_shouldPass() {
     // Use InteractorHelper to drive your interactor's lifecycle.
-    InteractorHelper.attach<LandingInteractor.LandingPresenter, LandingRouter>(interactor!!, presenter, router, null)
+    InteractorHelper.attach<MenuToolbarInteractor.MenuToolbarPresenter, MenuToolbarRouter>(interactor!!, presenter, router, null)
     InteractorHelper.detach(interactor!!)
 
     throw RuntimeException("Remove this test and add real tests.")

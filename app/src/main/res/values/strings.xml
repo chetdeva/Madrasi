@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Madrasi</string>
+    <string name="cart">Cart</string>
+    <string name="checkout">Checkout</string>
+    <string name="pay">Pay</string>
+    <string name="order_for">Order for</string>
+    <string name="total">Total: </string>
+    <string name="empty_phone_number_error">Phone Number cannot be empty</string>
+    <string name="phone_number_hint">Phone Number</string>
 </resources>

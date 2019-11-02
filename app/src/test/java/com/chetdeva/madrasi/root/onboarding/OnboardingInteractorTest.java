@@ -1,4 +1,4 @@
-package com.chetdeva.madrasi.root.landing;
+package com.chetdeva.madrasi.root.onboarding;
 
 import com.ubercab.test.UberTestBase;
 import com.uber.rib.core.InteractorHelper;
@@ -8,12 +8,12 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-public class LandingInteractorTest extends UberTestBase {
+public class OnboardingInteractorTest extends UberTestBase {
 
-  @Mock private LandingInteractor.LandingPresenter presenter;
-  @Mock private LandingRouter router;
+  @Mock private OnboardingInteractor.LandingPresenter presenter;
+  @Mock private OnboardingRouter router;
 
-  private LandingInteractor interactor;
+  private OnboardingInteractor interactor;
 
   @Before
   public void setup() {

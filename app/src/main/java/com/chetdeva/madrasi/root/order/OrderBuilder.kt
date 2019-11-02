@@ -1,9 +1,14 @@
 package com.chetdeva.madrasi.root.order
 
 import android.view.ViewGroup
+import com.chetdeva.madrasi.domain.cart.CartManager
+import com.chetdeva.madrasi.domain.cart.CartStream
+import com.chetdeva.madrasi.domain.cart.MutableCartStream
+import com.chetdeva.madrasi.domain.entity.menu.PhoneNumber
 import com.chetdeva.madrasi.root.RootView
 import com.chetdeva.madrasi.root.order.checkout.CheckoutBuilder
 import com.chetdeva.madrasi.root.order.menu.MenuBuilder
+import com.chetdeva.madrasi.root.order.menu.MenuInteractor
 import com.uber.rib.core.Builder
 import com.uber.rib.core.EmptyPresenter
 import com.uber.rib.core.InteractorBaseComponent
@@ -25,11 +30,12 @@ class OrderBuilder(dependency: ParentComponent) :
    *
    * @return a new [OrderRouter].
    */
-  fun build(parentViewGroup: ViewGroup): OrderRouter {
+  fun build(phoneNumber: PhoneNumber): OrderRouter {
     val interactor = OrderInteractor()
     val component = DaggerOrderBuilder_Component.builder()
       .parentComponent(dependency)
       .interactor(interactor)
+      .phoneNumber(phoneNumber)
       .build()
 
     return component.orderRouter()
@@ -50,6 +56,34 @@ class OrderBuilder(dependency: ParentComponent) :
       @JvmStatic
       internal fun presenter(): EmptyPresenter {
         return EmptyPresenter()
+      }
+
+      @OrderScope
+      @Provides
+      @JvmStatic
+      internal fun mutableCartStream(): MutableCartStream {
+        return MutableCartStream()
+      }
+
+      @OrderScope
+      @Provides
+      @JvmStatic
+      internal fun cartStream(mutableCartStream: MutableCartStream): CartStream {
+        return mutableCartStream
+      }
+
+      @OrderScope
+      @Provides
+      @JvmStatic
+      internal fun cartManager(mutableCartStream: MutableCartStream): CartManager {
+        return CartManager(mutableCartStream)
+      }
+
+      @OrderScope
+      @Provides
+      @JvmStatic
+      internal fun menuListener(orderInteractor: OrderInteractor): MenuInteractor.Listener {
+        return orderInteractor.MenuListener()
       }
 
       @OrderScope
@@ -80,6 +114,9 @@ class OrderBuilder(dependency: ParentComponent) :
     interface Builder {
       @BindsInstance
       fun interactor(interactor: OrderInteractor): Builder
+
+      @BindsInstance
+      fun phoneNumber(phoneNumber: PhoneNumber): Builder
 
       fun parentComponent(component: ParentComponent): Builder
       fun build(): Component

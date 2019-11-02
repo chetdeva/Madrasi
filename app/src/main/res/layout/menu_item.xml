@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@android:color/darker_gray"
     android:orientation="horizontal">
 
     <TextView
@@ -12,16 +11,16 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:padding="16dp"
-        android:textColor="@android:color/white"
-        android:textStyle="bold"
+        android:textColor="@android:color/black"
         tools:text="Food" />
 
-    <ImageView
-        android:id="@+id/arrow_imageview"
+    <ImageButton
+        android:id="@+id/add_imagebutton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="16dp"
-        android:tint="@android:color/white"
-        android:src="@drawable/ic_keyboard_arrow_up_black_24dp" />
+        android:background="?selectableItemBackgroundBorderless"
+        android:tint="@android:color/holo_blue_dark"
+        android:src="@drawable/ic_add_circle_black_24dp" />
 
 </LinearLayout>
