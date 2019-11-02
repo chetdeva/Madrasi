@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.chetdeva.madrasi.domain.cart.CartManager
 import com.chetdeva.madrasi.domain.cart.CartStream
-import com.chetdeva.madrasi.domain.entity.menu.MenuId
+import com.chetdeva.madrasi.domain.entity.menu.MenuInfo
 import com.chetdeva.madrasi.domain.repository.MenuRepository
 import com.chetdeva.madrasi.domain.repository.MenuStore
 import com.chetdeva.madrasi.root.order.menu.menutoolbar.MenuToolbarBuilder
@@ -30,14 +30,14 @@ class MenuBuilder(dependency: ParentComponent) :
    * @param parentViewGroup parent view group that this router's view will be added to.
    * @return a new [MenuRouter].
    */
-  fun build(parentViewGroup: ViewGroup, menuId: MenuId): MenuRouter {
+  fun build(parentViewGroup: ViewGroup, menuInfo: MenuInfo): MenuRouter {
     val view = createView(parentViewGroup)
     val interactor = MenuInteractor()
     val component = DaggerMenuBuilder_Component.builder()
       .parentComponent(dependency)
       .view(view)
       .interactor(interactor)
-      .menuId(menuId)
+      .menuId(menuInfo)
       .build()
     return component.menuRouter()
   }
@@ -96,7 +96,7 @@ class MenuBuilder(dependency: ParentComponent) :
       fun view(view: MenuView): Builder
 
       @BindsInstance
-      fun menuId(menuId: MenuId): Builder
+      fun menuId(menuInfo: MenuInfo): Builder
 
       fun parentComponent(component: ParentComponent): Builder
       fun build(): Component

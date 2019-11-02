@@ -2,9 +2,11 @@ package com.chetdeva.madrasi.root.order.menu.menutoolbar
 
 import com.chetdeva.madrasi.domain.cart.CartCalculator
 import com.chetdeva.madrasi.domain.cart.CartStream
+import com.chetdeva.madrasi.util.addTo
 import com.uber.rib.core.Bundle
 import com.uber.rib.core.Interactor
 import com.uber.rib.core.RibInteractor
+import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
 /**
@@ -13,6 +15,8 @@ import javax.inject.Inject
 @RibInteractor
 class MenuToolbarInteractor :
   Interactor<MenuToolbarInteractor.MenuToolbarPresenter, MenuToolbarRouter>() {
+
+  private val disposable: CompositeDisposable by lazy { CompositeDisposable() }
 
   @Inject
   lateinit var presenter: MenuToolbarPresenter
@@ -23,7 +27,7 @@ class MenuToolbarInteractor :
     super.didBecomeActive(savedInstanceState)
 
     cartStream.getCart()
-      .map(CartCalculator::getCartQuantity)
+      .map(CartCalculator::getCartItemsQuantity)
       .subscribe {
         if (it > 0) {
           presenter.showCartIcon()
@@ -31,7 +35,12 @@ class MenuToolbarInteractor :
         } else {
           presenter.hideCartIcon()
         }
-      }
+      }.addTo(disposable)
+  }
+
+  override fun willResignActive() {
+    super.willResignActive()
+    disposable.dispose()
   }
 
   /**

@@ -1,6 +1,6 @@
 package com.chetdeva.madrasi.root
 
-import com.chetdeva.madrasi.domain.entity.menu.PhoneNumber
+import com.chetdeva.madrasi.domain.entity.menu.PhoneNumberInfo
 import com.chetdeva.madrasi.root.onboarding.OnboardingBuilder
 import com.chetdeva.madrasi.root.onboarding.OnboardingRouter
 import com.chetdeva.madrasi.root.order.OrderBuilder
@@ -36,8 +36,8 @@ class RootRouter(
     }
   }
 
-  internal fun attachOrder(phoneNumber: PhoneNumber) {
-    orderRouter = orderBuilder.build(phoneNumber)
+  internal fun attachOrder(phoneNumberInfo: PhoneNumberInfo) {
+    orderRouter = orderBuilder.build(phoneNumberInfo)
     attachChild(orderRouter)
   }
 

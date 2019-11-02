@@ -1,6 +1,6 @@
 package com.chetdeva.madrasi.root
 
-import com.chetdeva.madrasi.domain.entity.menu.PhoneNumber
+import com.chetdeva.madrasi.domain.entity.menu.PhoneNumberInfo
 import com.chetdeva.madrasi.root.onboarding.OnboardingInteractor
 import com.chetdeva.madrasi.root.order.OrderInteractor
 import com.uber.rib.core.Bundle
@@ -24,9 +24,9 @@ class RootInteractor : Interactor<RootInteractor.RootPresenter, RootRouter>() {
   }
 
   inner class OnboardingListener : OnboardingInteractor.Listener {
-    override fun order(phoneNumber: PhoneNumber) {
+    override fun order(phoneNumberInfo: PhoneNumberInfo) {
       router.detachOnboarding()
-      router.attachOrder(phoneNumber)
+      router.attachOrder(phoneNumberInfo)
     }
   }
 

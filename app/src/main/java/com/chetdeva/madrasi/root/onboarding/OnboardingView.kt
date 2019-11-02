@@ -4,10 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
-import android.widget.LinearLayout
-import android.widget.Toast
+import android.widget.*
 import com.chetdeva.madrasi.R
 import com.jakewharton.rxrelay2.PublishRelay
 import com.jakewharton.rxrelay2.Relay
@@ -20,7 +17,7 @@ class OnboardingView @JvmOverloads constructor(
   context: Context,
   attrs: AttributeSet? = null,
   defStyle: Int = 0
-) : LinearLayout(context, attrs, defStyle), OnboardingInteractor.LandingPresenter {
+) : FrameLayout(context, attrs, defStyle), OnboardingInteractor.LandingPresenter {
 
   private val _orderClicks: Relay<String> = PublishRelay.create()
   override val orderClicks: Observable<String>

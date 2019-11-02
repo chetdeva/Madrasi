@@ -2,16 +2,18 @@ package com.chetdeva.madrasi.root.order
 
 import com.chetdeva.madrasi.domain.cart.CartManager
 import com.chetdeva.madrasi.domain.entity.cart.Cart
-import com.chetdeva.madrasi.domain.entity.menu.MenuId
-import com.chetdeva.madrasi.domain.entity.menu.PhoneNumber
+import com.chetdeva.madrasi.domain.entity.menu.MenuInfo
+import com.chetdeva.madrasi.domain.entity.menu.PhoneNumberInfo
 import com.chetdeva.madrasi.domain.entity.order.OrderInfo
 import com.chetdeva.madrasi.root.order.checkout.CheckoutInteractor
 import com.chetdeva.madrasi.root.order.menu.MenuInteractor
 import com.chetdeva.madrasi.root.order.thankyou.ThankYouInteractor
+import com.chetdeva.madrasi.util.addTo
 import com.uber.rib.core.Bundle
 import com.uber.rib.core.EmptyPresenter
 import com.uber.rib.core.Interactor
 import com.uber.rib.core.RibInteractor
+import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
 /**
@@ -20,10 +22,11 @@ import javax.inject.Inject
 @RibInteractor
 class OrderInteractor : Interactor<EmptyPresenter, OrderRouter>() {
 
-  private val MADRASI_MENU_ID: MenuId = MenuId("madrasi123")
+  private val MADRASI_MENU_Info: MenuInfo = MenuInfo("madrasi123")
+  private val disposable: CompositeDisposable by lazy { CompositeDisposable() }
 
   @Inject
-  lateinit var phoneNumber: PhoneNumber
+  lateinit var phoneNumberInfo: PhoneNumberInfo
   @Inject
   lateinit var listener: Listener
   @Inject
@@ -32,30 +35,35 @@ class OrderInteractor : Interactor<EmptyPresenter, OrderRouter>() {
   override fun didBecomeActive(savedInstanceState: Bundle?) {
     super.didBecomeActive(savedInstanceState)
 
-    router.attachMenu(MADRASI_MENU_ID)
+    router.attachMenu(MADRASI_MENU_Info)
+  }
+
+  override fun willResignActive() {
+    super.willResignActive()
+    disposable.dispose()
   }
 
   inner class MenuListener : MenuInteractor.Listener {
     override fun checkout(cart: Cart) {
       router.detachMenu()
-      router.attachCheckout(phoneNumber, cart)
+      router.attachCheckout(phoneNumberInfo, cart)
     }
   }
 
   inner class CheckoutListener : CheckoutInteractor.Listener {
     override fun checkout(orderInfo: OrderInfo) {
-      router.detachCheckout()
-      router.attachThankYou(phoneNumber, orderInfo)
+      cartManager.clearCart()
+        .subscribe {
+          router.detachCheckout()
+          router.attachThankYou(phoneNumberInfo, orderInfo)
+        }.addTo(disposable)
     }
   }
 
   inner class ThankYouListener : ThankYouInteractor.Listener {
     override fun orderAgain() {
-      cartManager.clearCart()
-        .subscribe {
-          router.detachThankYou()
-          listener.orderAgain()
-        }
+      router.detachThankYou()
+      listener.orderAgain()
     }
   }
 

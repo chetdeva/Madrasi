@@ -1,10 +1,12 @@
 package com.chetdeva.madrasi.root.onboarding
 
-import com.chetdeva.madrasi.domain.entity.menu.PhoneNumber
+import com.chetdeva.madrasi.domain.entity.menu.PhoneNumberInfo
+import com.chetdeva.madrasi.util.addTo
 import com.uber.rib.core.Bundle
 import com.uber.rib.core.Interactor
 import com.uber.rib.core.RibInteractor
 import io.reactivex.Observable
+import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
 /**
@@ -12,6 +14,8 @@ import javax.inject.Inject
  */
 @RibInteractor
 class OnboardingInteractor : Interactor<OnboardingInteractor.LandingPresenter, OnboardingRouter>() {
+
+  private val disposable: CompositeDisposable by lazy { CompositeDisposable() }
 
   @Inject
   lateinit var presenter: LandingPresenter
@@ -24,21 +28,24 @@ class OnboardingInteractor : Interactor<OnboardingInteractor.LandingPresenter, O
     presenter.orderClicks
       .subscribe {
         if (it.isNotBlank()) {
-          listener.order(PhoneNumber(it))
+          listener.order(PhoneNumberInfo(it))
         } else {
           presenter.showEmptyPhoneNumberErrorMessage()
         }
-      }
+      }.addTo(disposable)
   }
 
-  interface Listener {
-    fun order(phoneNumber: PhoneNumber)
+  override fun willResignActive() {
+    super.willResignActive()
+    disposable.dispose()
   }
 
   interface LandingPresenter {
     fun showEmptyPhoneNumberErrorMessage()
-
     val orderClicks: Observable<String>
+  }
 
+  interface Listener {
+    fun order(phoneNumberInfo: PhoneNumberInfo)
   }
 }

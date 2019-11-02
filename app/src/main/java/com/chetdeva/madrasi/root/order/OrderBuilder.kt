@@ -3,7 +3,7 @@ package com.chetdeva.madrasi.root.order
 import com.chetdeva.madrasi.domain.cart.CartManager
 import com.chetdeva.madrasi.domain.cart.CartStream
 import com.chetdeva.madrasi.domain.cart.MutableCartStream
-import com.chetdeva.madrasi.domain.entity.menu.PhoneNumber
+import com.chetdeva.madrasi.domain.entity.menu.PhoneNumberInfo
 import com.chetdeva.madrasi.root.RootView
 import com.chetdeva.madrasi.root.order.checkout.CheckoutBuilder
 import com.chetdeva.madrasi.root.order.checkout.CheckoutInteractor
@@ -29,12 +29,12 @@ class OrderBuilder(dependency: ParentComponent) :
    *
    * @return a new [OrderRouter].
    */
-  fun build(phoneNumber: PhoneNumber): OrderRouter {
+  fun build(phoneNumberInfo: PhoneNumberInfo): OrderRouter {
     val interactor = OrderInteractor()
     val component = DaggerOrderBuilder_Component.builder()
       .parentComponent(dependency)
       .interactor(interactor)
-      .phoneNumber(phoneNumber)
+      .phoneNumber(phoneNumberInfo)
       .build()
 
     return component.orderRouter()
@@ -131,7 +131,7 @@ class OrderBuilder(dependency: ParentComponent) :
       fun interactor(interactor: OrderInteractor): Builder
 
       @BindsInstance
-      fun phoneNumber(phoneNumber: PhoneNumber): Builder
+      fun phoneNumber(phoneNumberInfo: PhoneNumberInfo): Builder
 
       fun parentComponent(component: ParentComponent): Builder
       fun build(): Component

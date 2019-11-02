@@ -2,8 +2,8 @@ package com.chetdeva.madrasi.root.order
 
 import android.view.ViewGroup
 import com.chetdeva.madrasi.domain.entity.cart.Cart
-import com.chetdeva.madrasi.domain.entity.menu.MenuId
-import com.chetdeva.madrasi.domain.entity.menu.PhoneNumber
+import com.chetdeva.madrasi.domain.entity.menu.MenuInfo
+import com.chetdeva.madrasi.domain.entity.menu.PhoneNumberInfo
 import com.chetdeva.madrasi.domain.entity.order.OrderInfo
 import com.chetdeva.madrasi.root.order.checkout.CheckoutBuilder
 import com.chetdeva.madrasi.root.order.checkout.CheckoutRouter
@@ -29,8 +29,8 @@ class OrderRouter(
   private var checkoutRouter: CheckoutRouter? = null
   private var thankYouRouter: ThankYouRouter? = null
 
-  internal fun attachMenu(menuId: MenuId) {
-    menuRouter = menuBuilder.build(parentView, menuId)
+  internal fun attachMenu(menuInfo: MenuInfo) {
+    menuRouter = menuBuilder.build(parentView, menuInfo)
     attachChild(menuRouter)
     parentView.addView(menuRouter!!.view)
   }
@@ -43,8 +43,8 @@ class OrderRouter(
     }
   }
 
-  internal fun attachCheckout(phoneNumber: PhoneNumber, cart: Cart) {
-    checkoutRouter = checkoutBuilder.build(parentView, phoneNumber, cart)
+  internal fun attachCheckout(phoneNumberInfo: PhoneNumberInfo, cart: Cart) {
+    checkoutRouter = checkoutBuilder.build(parentView, phoneNumberInfo, cart)
     attachChild(checkoutRouter)
     parentView.addView(checkoutRouter!!.view)
   }
@@ -57,8 +57,8 @@ class OrderRouter(
     }
   }
 
-  internal fun attachThankYou(phoneNumber: PhoneNumber, orderInfo: OrderInfo) {
-    thankYouRouter = thankYouBuilder.build(parentView, phoneNumber, orderInfo)
+  internal fun attachThankYou(phoneNumberInfo: PhoneNumberInfo, orderInfo: OrderInfo) {
+    thankYouRouter = thankYouBuilder.build(parentView, phoneNumberInfo, orderInfo)
     attachChild(thankYouRouter)
     parentView.addView(thankYouRouter!!.view)
   }

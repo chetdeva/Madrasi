@@ -3,8 +3,7 @@ package com.chetdeva.madrasi.root.order.checkout
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.chetdeva.madrasi.domain.entity.cart.Cart
-import com.chetdeva.madrasi.domain.entity.menu.PhoneNumber
-import com.chetdeva.madrasi.root.order.thankyou.ThankYouBuilder
+import com.chetdeva.madrasi.domain.entity.menu.PhoneNumberInfo
 import com.uber.rib.core.InteractorBaseComponent
 import com.uber.rib.core.ViewBuilder
 import dagger.Binds
@@ -31,7 +30,7 @@ class CheckoutBuilder(dependency: ParentComponent) :
    */
   fun build(
     parentViewGroup: ViewGroup,
-    phoneNumber: PhoneNumber,
+    phoneNumberInfo: PhoneNumberInfo,
     cart: Cart
   ): CheckoutRouter {
     val view = createView(parentViewGroup)
@@ -40,7 +39,7 @@ class CheckoutBuilder(dependency: ParentComponent) :
       .parentComponent(dependency)
       .view(view)
       .interactor(interactor)
-      .phoneNumber(phoneNumber)
+      .phoneNumber(phoneNumberInfo)
       .cart(cart)
       .build()
     return component.checkoutRouter()
@@ -78,8 +77,8 @@ class CheckoutBuilder(dependency: ParentComponent) :
       @CheckoutScope
       @Provides
       @JvmStatic
-      internal fun checkoutManager(phoneNumber: PhoneNumber, cart: Cart): CheckoutManager {
-        return CheckoutManager(phoneNumber, cart)
+      internal fun checkoutManager(phoneNumberInfo: PhoneNumberInfo, cart: Cart): CheckoutManager {
+        return CheckoutManager(phoneNumberInfo, cart)
       }
     }
   }
@@ -97,7 +96,7 @@ class CheckoutBuilder(dependency: ParentComponent) :
       fun view(view: CheckoutView): Builder
 
       @BindsInstance
-      fun phoneNumber(phoneNumber: PhoneNumber): Builder
+      fun phoneNumber(phoneNumberInfo: PhoneNumberInfo): Builder
 
       @BindsInstance
       fun cart(cart: Cart): Builder

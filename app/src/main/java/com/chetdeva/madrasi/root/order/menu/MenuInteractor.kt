@@ -6,15 +6,17 @@ import com.chetdeva.madrasi.domain.entity.cart.Cart
 import com.chetdeva.madrasi.domain.entity.cart.CartItem
 import com.chetdeva.madrasi.domain.entity.cart.CartResult
 import com.chetdeva.madrasi.domain.entity.menu.MenuCategory
-import com.chetdeva.madrasi.domain.entity.menu.MenuId
+import com.chetdeva.madrasi.domain.entity.menu.MenuInfo
 import com.chetdeva.madrasi.domain.entity.menu.MenuItem
 import com.chetdeva.madrasi.domain.repository.MenuRepository
+import com.chetdeva.madrasi.util.addTo
 import com.jakewharton.rxrelay2.Relay
 import com.uber.rib.core.Bundle
 import com.uber.rib.core.Interactor
 import com.uber.rib.core.RibInteractor
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
 /**
@@ -23,12 +25,14 @@ import javax.inject.Inject
 @RibInteractor
 class MenuInteractor : Interactor<MenuInteractor.MenuPresenter, MenuRouter>() {
 
+  private val disposable: CompositeDisposable by lazy { CompositeDisposable() }
+
   @Inject
   lateinit var presenter: MenuPresenter
   @Inject
   lateinit var menuRepository: MenuRepository
   @Inject
-  lateinit var menuId: MenuId
+  lateinit var menuInfo: MenuInfo
   @Inject
   lateinit var cartManager: CartManager
   @Inject
@@ -41,23 +45,24 @@ class MenuInteractor : Interactor<MenuInteractor.MenuPresenter, MenuRouter>() {
 
     router.attachMenuToolbar()
 
-    menuRepository.getMenuCategories(menuId.menuId)
+    menuRepository.getMenuCategories(menuInfo.menuId)
       .observeOn(AndroidSchedulers.mainThread())
       .subscribe(presenter::showMenuCategories)
+      .addTo(disposable)
 
     presenter.addClicks
       .flatMapSingle { cartManager.addItem(CartItem(it, 1)) }
       .observeOn(AndroidSchedulers.mainThread())
       .subscribe {
         presenter.showMessage(getCartResultMessage(it))
-      }
+      }.addTo(disposable)
 
     presenter.checkoutClicks
       .flatMap { cartStream.getCart() }
       .observeOn(AndroidSchedulers.mainThread())
       .subscribe {
         listener.checkout(it)
-      }
+      }.addTo(disposable)
   }
 
   private fun getCartResultMessage(cartResult: CartResult): String {
@@ -67,6 +72,11 @@ class MenuInteractor : Interactor<MenuInteractor.MenuPresenter, MenuRouter>() {
       is CartResult.UpdateItemSuccess -> cartResult.cartItem.quantity.toString() + " " + cartResult.cartItem.menuItem.name + " updated"
       is CartResult.UpdateItemError -> cartResult.error.message ?: ""
     }
+  }
+
+  override fun willResignActive() {
+    super.willResignActive()
+    disposable.dispose()
   }
 
   /**

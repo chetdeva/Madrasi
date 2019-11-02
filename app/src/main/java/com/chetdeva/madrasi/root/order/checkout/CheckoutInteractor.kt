@@ -2,7 +2,7 @@ package com.chetdeva.madrasi.root.order.checkout
 
 import com.chetdeva.madrasi.domain.entity.cart.Cart
 import com.chetdeva.madrasi.domain.entity.cart.CartItem
-import com.chetdeva.madrasi.domain.entity.menu.PhoneNumber
+import com.chetdeva.madrasi.domain.entity.menu.PhoneNumberInfo
 import com.chetdeva.madrasi.domain.entity.order.OrderInfo
 import com.uber.rib.core.Bundle
 import com.uber.rib.core.Interactor
@@ -21,7 +21,7 @@ class CheckoutInteractor : Interactor<CheckoutInteractor.CheckoutPresenter, Chec
   @Inject
   lateinit var presenter: CheckoutPresenter
   @Inject
-  lateinit var phoneNumber: PhoneNumber
+  lateinit var phoneNumberInfo: PhoneNumberInfo
   @Inject
   lateinit var cart: Cart
   @Inject
@@ -32,7 +32,7 @@ class CheckoutInteractor : Interactor<CheckoutInteractor.CheckoutPresenter, Chec
   override fun didBecomeActive(savedInstanceState: Bundle?) {
     super.didBecomeActive(savedInstanceState)
 
-    presenter.showPhoneNumber(phoneNumber.phoneNumber)
+    presenter.showPhoneNumber(phoneNumberInfo.phoneNumber)
     presenter.showCartItems(cart.cartItems)
     presenter.showTotal(cart.total.toPlainString())
 
