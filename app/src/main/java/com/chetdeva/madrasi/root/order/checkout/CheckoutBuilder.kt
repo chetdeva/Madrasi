@@ -16,8 +16,6 @@ import javax.inject.Scope
 
 /**
  * Builder for the {@link CheckoutScope}.
- *
- * TODO describe this scope's responsibility as a whole.
  */
 class CheckoutBuilder(dependency: ParentComponent) :
   ViewBuilder<CheckoutView, CheckoutRouter, CheckoutBuilder.ParentComponent>(dependency) {

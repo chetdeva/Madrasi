@@ -44,6 +44,7 @@ class OrderInteractor : Interactor<EmptyPresenter, OrderRouter>() {
   }
 
   inner class MenuListener : MenuInteractor.Listener {
+
     override fun checkout(cart: Cart) {
       router.detachMenu()
       router.attachCheckout(phoneNumberInfo, cart)
@@ -51,6 +52,7 @@ class OrderInteractor : Interactor<EmptyPresenter, OrderRouter>() {
   }
 
   inner class CheckoutListener : CheckoutInteractor.Listener {
+
     override fun paymentDone(orderInfo: OrderInfo) {
       cartManager.clearCart()
         .subscribe {
@@ -61,6 +63,7 @@ class OrderInteractor : Interactor<EmptyPresenter, OrderRouter>() {
   }
 
   inner class ThankYouListener : ThankYouInteractor.Listener {
+
     override fun orderAgain() {
       router.detachThankYou()
       listener.orderAgain()

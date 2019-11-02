@@ -4,10 +4,12 @@ import com.chetdeva.madrasi.domain.entity.cart.Cart
 import com.chetdeva.madrasi.domain.entity.cart.CartItem
 import com.chetdeva.madrasi.domain.entity.menu.PhoneNumberInfo
 import com.chetdeva.madrasi.domain.entity.order.OrderInfo
+import com.chetdeva.madrasi.util.addTo
 import com.uber.rib.core.Bundle
 import com.uber.rib.core.Interactor
 import com.uber.rib.core.RibInteractor
 import io.reactivex.Observable
+import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
 /**
@@ -17,6 +19,7 @@ import javax.inject.Inject
 class CheckoutInteractor : Interactor<CheckoutInteractor.CheckoutPresenter, CheckoutRouter>() {
 
   private val DEFAULT_PAYMENT_METHOD: String = "VISA"
+  private val disposable: CompositeDisposable by lazy { CompositeDisposable() }
 
   @Inject
   lateinit var presenter: CheckoutPresenter
@@ -39,6 +42,12 @@ class CheckoutInteractor : Interactor<CheckoutInteractor.CheckoutPresenter, Chec
     presenter.payButtonClicks
       .flatMapSingle { checkoutManager.checkout(DEFAULT_PAYMENT_METHOD) }
       .subscribe(listener::paymentDone)
+      .addTo(disposable)
+  }
+
+  override fun willResignActive() {
+    super.willResignActive()
+    disposable.dispose()
   }
 
   /**
