@@ -4,7 +4,7 @@ import android.view.ViewGroup
 import com.chetdeva.madrasi.domain.entity.cart.Cart
 import com.chetdeva.madrasi.domain.entity.menu.MenuId
 import com.chetdeva.madrasi.domain.entity.menu.PhoneNumber
-import com.chetdeva.madrasi.domain.entity.order.OrderId
+import com.chetdeva.madrasi.domain.entity.order.OrderInfo
 import com.chetdeva.madrasi.root.order.checkout.CheckoutBuilder
 import com.chetdeva.madrasi.root.order.checkout.CheckoutRouter
 import com.chetdeva.madrasi.root.order.menu.MenuBuilder
@@ -57,8 +57,8 @@ class OrderRouter(
     }
   }
 
-  internal fun attachThankYou(phoneNumber: PhoneNumber, orderId: OrderId) {
-    thankYouRouter = thankYouBuilder.build(parentView, phoneNumber, orderId)
+  internal fun attachThankYou(phoneNumber: PhoneNumber, orderInfo: OrderInfo) {
+    thankYouRouter = thankYouBuilder.build(parentView, phoneNumber, orderInfo)
     attachChild(thankYouRouter)
     parentView.addView(thankYouRouter!!.view)
   }

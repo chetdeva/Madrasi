@@ -20,25 +20,50 @@ class MenuStore {
     )
   }
 
-  private fun createFoodSubMenuSubCategories(): MenuSubCategory {
-    return MenuSubCategory("11", "1", "Burgers", createBurgersMenuItems())
-  }
-
-  private fun createBurgersMenuItems(): List<MenuItem> {
+  private fun createFoodSubMenuSubCategories(): List<MenuSubCategory> {
     return listOf(
-      MenuItem("111", "11", "Cheese Burger", 10.toBigDecimal()),
-      MenuItem("112", "11", "BBQ Burger", 12.toBigDecimal()),
-      MenuItem("113", "11", "Ham Burger", 12.toBigDecimal())
+      MenuSubCategory("11", "1", "Snacks", createSnacksMenuItems()),
+      MenuSubCategory("12", "1", "Dosas", createDosaMenuItems())
     )
   }
 
-  private fun createBeverageMenuSubCategories(): MenuSubCategory {
-    return MenuSubCategory("21", "2", "Cold Drinks", createColdDrinksMenuItems())
+  private fun createDosaMenuItems(): List<MenuItem> {
+    return listOf(
+      MenuItem("121", "12", "Madrasi Special Dosa", 100.toBigDecimal()),
+      MenuItem("122", "12", "Masala Dosa", 90.toBigDecimal()),
+      MenuItem("123", "12", "Butter Dosa", 90.toBigDecimal())
+    )
+  }
+
+  private fun createSnacksMenuItems(): List<MenuItem> {
+    return listOf(
+      MenuItem("111", "11", "Masala Idli", 90.toBigDecimal()),
+      MenuItem("112", "11", "Sambar Idli", 70.toBigDecimal()),
+      MenuItem("113", "11", "Dahi Idli", 80.toBigDecimal())
+    )
+  }
+
+  private fun createBeverageMenuSubCategories(): List<MenuSubCategory> {
+    return listOf(
+      MenuSubCategory("21", "2", "Hot drinks", createHotDrinksMenuItems()),
+      MenuSubCategory("22", "2", "Cold drinks", createColdDrinksMenuItems())
+    )
   }
 
   private fun createColdDrinksMenuItems(): List<MenuItem> {
     return listOf(
-      MenuItem("211", "21", "Pepsi", 5.toBigDecimal())
+      MenuItem("221", "22", "Pepsi", 40.toBigDecimal()),
+      MenuItem("222", "22", "Cold Coffee", 50.toBigDecimal()),
+      MenuItem("223", "22", "Lassi", 60.toBigDecimal())
+    )
+  }
+
+  private fun createHotDrinksMenuItems(): List<MenuItem> {
+    return listOf(
+      MenuItem("211", "21", "Badam Milk", 60.toBigDecimal()),
+      MenuItem("212", "21", "Masala Butter Milk", 50.toBigDecimal()),
+      MenuItem("213", "21", "Madrasi Tea", 40.toBigDecimal()),
+      MenuItem("214", "21", "Madrasi Coffee", 50.toBigDecimal())
     )
   }
 }

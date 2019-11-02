@@ -14,6 +14,8 @@ class MenuItemGItem(
 
   override fun bind(viewHolder: GroupieViewHolder, position: Int) {
     viewHolder.name_textview.text = menuItem.name
+    val inrPrice = viewHolder.containerView.resources.getString(R.string.inr_price, menuItem.price.toPlainString())
+    viewHolder.price_textview.text = inrPrice
     viewHolder.add_imagebutton.setOnClickListener {
       menuItemListener(menuItem)
     }

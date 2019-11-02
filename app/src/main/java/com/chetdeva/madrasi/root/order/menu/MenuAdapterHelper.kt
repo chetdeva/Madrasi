@@ -21,15 +21,19 @@ object MenuAdapterHelper {
     menuCategories.forEach { menuCategory ->
 
       val expandableGroup = ExpandableGroup(MenuCategoryGItem(menuCategory), true)
-      val subcategoriesSection = Section(MenuSubcategoryGItem(menuCategory.menuSubCategory))
 
-      if (menuCategory.menuSubCategory.menuItems.isNotEmpty()) {
-        menuCategory.menuSubCategory.menuItems.forEach { menuItem ->
-          subcategoriesSection.add(MenuItemGItem(menuItem, menuItemListener))
+      menuCategory.menuSubCategories.forEach { menuSubCategory ->
+
+        val subcategoriesSection = Section(MenuSubcategoryGItem(menuSubCategory))
+
+        if (menuSubCategory.menuItems.isNotEmpty()) {
+          menuSubCategory.menuItems.forEach { menuItem ->
+            subcategoriesSection.add(MenuItemGItem(menuItem, menuItemListener))
+          }
         }
-      }
 
-      expandableGroup.add(subcategoriesSection)
+        expandableGroup.add(subcategoriesSection)
+      }
       groups.add(expandableGroup)
     }
 

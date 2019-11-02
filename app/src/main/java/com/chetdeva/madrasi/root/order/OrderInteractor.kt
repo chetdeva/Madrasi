@@ -3,9 +3,8 @@ package com.chetdeva.madrasi.root.order
 import com.chetdeva.madrasi.domain.cart.CartManager
 import com.chetdeva.madrasi.domain.entity.cart.Cart
 import com.chetdeva.madrasi.domain.entity.menu.MenuId
-import com.chetdeva.madrasi.domain.entity.menu.MenuItem
 import com.chetdeva.madrasi.domain.entity.menu.PhoneNumber
-import com.chetdeva.madrasi.domain.entity.order.OrderId
+import com.chetdeva.madrasi.domain.entity.order.OrderInfo
 import com.chetdeva.madrasi.root.order.checkout.CheckoutInteractor
 import com.chetdeva.madrasi.root.order.menu.MenuInteractor
 import com.chetdeva.madrasi.root.order.thankyou.ThankYouInteractor
@@ -44,9 +43,9 @@ class OrderInteractor : Interactor<EmptyPresenter, OrderRouter>() {
   }
 
   inner class CheckoutListener : CheckoutInteractor.Listener {
-    override fun checkout(orderId: OrderId) {
+    override fun checkout(orderInfo: OrderInfo) {
       router.detachCheckout()
-      router.attachThankYou(phoneNumber, orderId)
+      router.attachThankYou(phoneNumber, orderInfo)
     }
   }
 

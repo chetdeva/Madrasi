@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Madrasi</string>
+    <string name="app_name">Madrasi Masala</string>
     <string name="cart">Cart</string>
     <string name="checkout">Checkout</string>
     <string name="pay">Pay</string>
@@ -9,4 +9,6 @@
     <string name="phone_number_hint">Phone Number</string>
     <string name="thank_you">Thank You!</string>
     <string name="order_id">Order Id:</string>
+    <string name="inr_price">₹ %s</string>
+    <string name="amount_paid">Amount Paid:</string>
 </resources>

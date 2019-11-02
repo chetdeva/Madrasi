@@ -49,12 +49,7 @@ class MenuInteractor : Interactor<MenuInteractor.MenuPresenter, MenuRouter>() {
       .flatMapSingle { cartManager.addItem(CartItem(it, 1)) }
       .observeOn(AndroidSchedulers.mainThread())
       .subscribe {
-        when (it) {
-          is CartResult.AddItemSuccess -> presenter.showMessage(it.cartItem.menuItem.name + " added")
-          is CartResult.AddItemError -> presenter.showMessage(it.error.message ?: "")
-          is CartResult.UpdateItemSuccess -> presenter.showMessage(it.cartItem.menuItem.name + " updated")
-          is CartResult.UpdateItemError -> presenter.showMessage(it.error.message ?: "")
-        }
+        presenter.showMessage(getCartResultMessage(it))
       }
 
     presenter.checkoutClicks
@@ -63,6 +58,15 @@ class MenuInteractor : Interactor<MenuInteractor.MenuPresenter, MenuRouter>() {
       .subscribe {
         listener.checkout(it)
       }
+  }
+
+  private fun getCartResultMessage(cartResult: CartResult): String {
+    return when (cartResult) {
+      is CartResult.AddItemSuccess -> cartResult.cartItem.quantity.toString() + " " + cartResult.cartItem.menuItem.name + " added"
+      is CartResult.AddItemError -> cartResult.error.message ?: ""
+      is CartResult.UpdateItemSuccess -> cartResult.cartItem.quantity.toString() + " " + cartResult.cartItem.menuItem.name + " updated"
+      is CartResult.UpdateItemError -> cartResult.error.message ?: ""
+    }
   }
 
   /**

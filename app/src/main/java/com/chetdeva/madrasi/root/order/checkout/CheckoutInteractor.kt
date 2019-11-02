@@ -3,7 +3,7 @@ package com.chetdeva.madrasi.root.order.checkout
 import com.chetdeva.madrasi.domain.entity.cart.Cart
 import com.chetdeva.madrasi.domain.entity.cart.CartItem
 import com.chetdeva.madrasi.domain.entity.menu.PhoneNumber
-import com.chetdeva.madrasi.domain.entity.order.OrderId
+import com.chetdeva.madrasi.domain.entity.order.OrderInfo
 import com.uber.rib.core.Bundle
 import com.uber.rib.core.Interactor
 import com.uber.rib.core.RibInteractor
@@ -52,6 +52,6 @@ class CheckoutInteractor : Interactor<CheckoutInteractor.CheckoutPresenter, Chec
   }
 
   interface Listener {
-    fun checkout(orderId: OrderId)
+    fun checkout(orderInfo: OrderInfo)
   }
 }

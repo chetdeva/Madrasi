@@ -1,7 +1,7 @@
 package com.chetdeva.madrasi.root.order.thankyou
 
 import com.chetdeva.madrasi.domain.entity.menu.PhoneNumber
-import com.chetdeva.madrasi.domain.entity.order.OrderId
+import com.chetdeva.madrasi.domain.entity.order.OrderInfo
 import com.uber.rib.core.Bundle
 import com.uber.rib.core.Interactor
 import com.uber.rib.core.RibInteractor
@@ -19,7 +19,7 @@ class ThankYouInteractor : Interactor<ThankYouInteractor.ThankYouPresenter, Than
   @Inject
   lateinit var phoneNumber: PhoneNumber
   @Inject
-  lateinit var orderId: OrderId
+  lateinit var orderInfo: OrderInfo
   @Inject
   lateinit var listener: Listener
 
@@ -27,7 +27,8 @@ class ThankYouInteractor : Interactor<ThankYouInteractor.ThankYouPresenter, Than
     super.didBecomeActive(savedInstanceState)
 
     presenter.showPhoneNumber(phoneNumber.phoneNumber)
-    presenter.showOrderId(orderId.orderId)
+    presenter.showOrderTotal(orderInfo.total.toPlainString())
+    presenter.showOrderId(orderInfo.orderId)
 
     presenter.orderAgainClickRelay
       .subscribe {
@@ -40,6 +41,7 @@ class ThankYouInteractor : Interactor<ThankYouInteractor.ThankYouPresenter, Than
    */
   interface ThankYouPresenter {
     fun showPhoneNumber(phoneNumber: String)
+    fun showOrderTotal(total: String)
     fun showOrderId(orderId: String)
     val orderAgainClickRelay: Observable<Unit>
   }

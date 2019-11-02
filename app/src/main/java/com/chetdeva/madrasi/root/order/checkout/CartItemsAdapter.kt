@@ -34,10 +34,14 @@ class CartItemsAdapter(private val cartItems: MutableList<CartItem>) :
 
     private val nameTextView: TextView = itemView.findViewById(R.id.name_textview)
     private val quantityTextView: TextView = itemView.findViewById(R.id.quantity_textview)
+    private val quantifiedPriceTextView: TextView = itemView.findViewById(R.id.quantified_price_textview)
 
-    fun bind(menuCategory: CartItem) {
-      nameTextView.text = menuCategory.menuItem.name
-      quantityTextView.text = menuCategory.quantity.toString()
+    fun bind(cartItem: CartItem) {
+      nameTextView.text = cartItem.menuItem.name
+      quantityTextView.text = cartItem.quantity.toString()
+      val inrQuantifiedPrice =
+        itemView.resources.getString(R.string.inr_price, cartItem.quantifiedPrice.toPlainString())
+      quantifiedPriceTextView.text = inrQuantifiedPrice
     }
   }
 }

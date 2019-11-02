@@ -9,74 +9,68 @@ import com.chetdeva.madrasi.domain.entity.cart.CartItem
 
 object CartCalculator {
 
-    fun addItem(cart: Cart, cartItem: CartItem): CartItem {
+  fun addItem(cart: Cart, cartItem: CartItem): CartItem {
 
-        val sameItem = cart.cartItems.find {
-          isSameCartItem(
-            it,
-            cartItem
-          )
-        }
-
-        if (sameItem != null) {
-          updateQuantity(
-            sameItem,
-            sameItem.quantity + 1
-          )
-        } else {
-          updateQuantity(cartItem, 1)
-          add(cart, cartItem)
-        }
-
-        return cartItem
+    val sameCartItem = cart.cartItems.find {
+      isSameCartItem(it, cartItem)
     }
 
-    private fun isSameCartItem(oldCartItem: CartItem, cartItem: CartItem): Boolean {
-        return oldCartItem.menuItem.id == cartItem.menuItem.id
+    if (sameCartItem != null) {
+      updateQuantity(sameCartItem, sameCartItem.quantity + 1)
+      return sameCartItem
+    } else {
+      updateQuantity(cartItem, 1)
+      add(cart, cartItem)
+      return cartItem
     }
+  }
 
-    fun isEmpty(cart: Cart): Boolean {
-        return cart.cartItems.isEmpty()
-    }
+  private fun isSameCartItem(oldCartItem: CartItem, cartItem: CartItem): Boolean {
+    return oldCartItem.menuItem.id == cartItem.menuItem.id
+  }
 
-    private fun add(cart: Cart, cartItem: CartItem) {
-        cart.cartItems.add(cartItem)
-    }
+  fun isEmpty(cart: Cart): Boolean {
+    return cart.cartItems.isEmpty()
+  }
 
-    fun removeItem(cart: Cart, cartItem: CartItem) {
-        cart.cartItems.remove(cartItem)
-    }
+  private fun add(cart: Cart, cartItem: CartItem) {
+    cart.cartItems.add(cartItem)
+  }
 
-    fun clearCart(cart: Cart) {
-        cart.cartItems.clear()
-        cart.taxes.clear()
-    }
+  fun removeItem(cart: Cart, cartItem: CartItem) {
+    cart.cartItems.remove(cartItem)
+  }
 
-    fun updateItem(cart: Cart, item: CartItem, newQuantity: Int): CartItem {
-        getItem(cart, item.menuItem.id)?.let {
-          updateQuantity(it, newQuantity)
-        }
-        return getItem(cart, item.menuItem.id)!!
-    }
+  fun clearCart(cart: Cart) {
+    cart.cartItems.clear()
+    cart.taxes.clear()
+  }
 
-    fun getItem(cart: Cart, itemId: String): CartItem? {
-        return cart.cartItems.find { it.menuItem.id == itemId }
+  fun updateItem(cart: Cart, item: CartItem, newQuantity: Int): CartItem {
+    getItem(cart, item.menuItem.id)?.let {
+      updateQuantity(it, newQuantity)
     }
+    return getItem(cart, item.menuItem.id)!!
+  }
 
-    private fun updateQuantity(item: CartItem, newQuantity: Int) {
-        item.quantity = newQuantity
-    }
+  fun getItem(cart: Cart, itemId: String): CartItem? {
+    return cart.cartItems.find { it.menuItem.id == itemId }
+  }
 
-    fun getCartQuantity(cart: Cart): Int {
-        return cart.cartItems
-            .fold(0) { acc, e -> acc + e.quantity }
-    }
+  private fun updateQuantity(item: CartItem, newQuantity: Int) {
+    item.quantity = newQuantity
+  }
 
-    fun getCartItemsQuantity(cart: Cart): Int {
-        return cart.cartItems.count()
-    }
+  fun getCartQuantity(cart: Cart): Int {
+    return cart.cartItems
+      .fold(0) { acc, e -> acc + e.quantity }
+  }
 
-    fun getQuantity(cart: Cart, itemId: String): Int {
-        return cart.cartItems.find { it.menuItem.id == itemId }?.quantity ?: 0
-    }
+  fun getCartItemsQuantity(cart: Cart): Int {
+    return cart.cartItems.count()
+  }
+
+  fun getQuantity(cart: Cart, itemId: String): Int {
+    return cart.cartItems.find { it.menuItem.id == itemId }?.quantity ?: 0
+  }
 }

@@ -3,7 +3,7 @@ package com.chetdeva.madrasi.root.order.thankyou
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.chetdeva.madrasi.domain.entity.menu.PhoneNumber
-import com.chetdeva.madrasi.domain.entity.order.OrderId
+import com.chetdeva.madrasi.domain.entity.order.OrderInfo
 import com.uber.rib.core.InteractorBaseComponent
 import com.uber.rib.core.ViewBuilder
 import dagger.Binds
@@ -29,7 +29,7 @@ class ThankYouBuilder(dependency: ParentComponent) :
   fun build(
     parentViewGroup: ViewGroup,
     phoneNumber: PhoneNumber,
-    orderId: OrderId
+    orderInfo: OrderInfo
   ): ThankYouRouter {
     val view = createView(parentViewGroup)
     val interactor = ThankYouInteractor()
@@ -38,7 +38,7 @@ class ThankYouBuilder(dependency: ParentComponent) :
       .view(view)
       .interactor(interactor)
       .phoneNumber(phoneNumber)
-      .orderId(orderId)
+      .orderInfo(orderInfo)
       .build()
     return component.thankyouRouter()
   }
@@ -90,7 +90,7 @@ class ThankYouBuilder(dependency: ParentComponent) :
       fun phoneNumber(phoneNumber: PhoneNumber): Builder
 
       @BindsInstance
-      fun orderId(orderId: OrderId): Builder
+      fun orderInfo(orderInfo: OrderInfo): Builder
 
       fun parentComponent(component: ParentComponent): Builder
       fun build(): Component

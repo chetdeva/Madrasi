@@ -21,8 +21,9 @@ class ThankYouView @JvmOverloads constructor(
   defStyle: Int = 0
 ) : LinearLayout(context, attrs, defStyle), ThankYouInteractor.ThankYouPresenter {
 
-  private lateinit var orderIdTextview: TextView
+  private lateinit var orderIdTextView: TextView
   private lateinit var phoneNumberTextView: TextView
+  private lateinit var orderTotalTextView: TextView
   private lateinit var orderAgainButton: Button
 
   private val _orderAgainClickRelay: Relay<Unit> = PublishRelay.create()
@@ -32,11 +33,16 @@ class ThankYouView @JvmOverloads constructor(
   override fun onFinishInflate() {
     super.onFinishInflate()
 
-    orderIdTextview = findViewById(R.id.order_id_textview)
+    orderIdTextView = findViewById(R.id.order_id_textview)
     phoneNumberTextView = findViewById(R.id.phone_number_textview)
+    orderTotalTextView = findViewById(R.id.order_total_textview)
     orderAgainButton = findViewById(R.id.order_again_button)
 
     orderAgainButton.setOnClickListener { _orderAgainClickRelay.accept(Unit) }
+  }
+
+  override fun showOrderTotal(total: String) {
+    orderTotalTextView.text = resources.getString(R.string.inr_price, total)
   }
 
   override fun showPhoneNumber(phoneNumber: String) {
@@ -44,7 +50,7 @@ class ThankYouView @JvmOverloads constructor(
   }
 
   override fun showOrderId(orderId: String) {
-    orderIdTextview.text = orderId
+    orderIdTextView.text = orderId
   }
 
   companion object {

@@ -59,7 +59,7 @@ class CheckoutView @JvmOverloads constructor(
   }
 
   override fun showTotal(total: String) {
-    totalTextView.text = total
+    totalTextView.text = resources.getString(R.string.inr_price, total)
   }
 
   companion object {
