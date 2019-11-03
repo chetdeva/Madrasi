@@ -16,7 +16,7 @@ class MenuRouter(
 
   private var menuToolbarRouter: MenuToolbarRouter? = null
 
-  fun attachMenuToolbar() {
+  fun addMenuToolbar() {
     menuToolbarRouter = menuToolbarBuilder.build(view.getMenuToolbarContainer())
     attachChild(menuToolbarRouter)
     view.getMenuToolbarContainer().addView(menuToolbarRouter!!.view)

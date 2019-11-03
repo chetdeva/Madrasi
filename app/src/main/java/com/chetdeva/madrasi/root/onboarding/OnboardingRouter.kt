@@ -10,4 +10,7 @@ class OnboardingRouter(
   interactor: OnboardingInteractor,
   component: OnboardingBuilder.Component
 ) :
-  ViewRouter<OnboardingView, OnboardingInteractor, OnboardingBuilder.Component>(view, interactor, component)
+  ViewRouter<OnboardingView, OnboardingInteractor, OnboardingBuilder.Component>(view, interactor, component) {
+
+  j
+}

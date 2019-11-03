@@ -43,7 +43,7 @@ class MenuInteractor : Interactor<MenuInteractor.MenuPresenter, MenuRouter>() {
   override fun didBecomeActive(savedInstanceState: Bundle?) {
     super.didBecomeActive(savedInstanceState)
 
-    router.attachMenuToolbar()
+    router.addMenuToolbar()
 
     menuRepository.getMenuCategories(menuInfo.menuId)
       .observeOn(AndroidSchedulers.mainThread())

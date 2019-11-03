@@ -17,7 +17,7 @@ class OnboardingView @JvmOverloads constructor(
   context: Context,
   attrs: AttributeSet? = null,
   defStyle: Int = 0
-) : FrameLayout(context, attrs, defStyle), OnboardingInteractor.LandingPresenter {
+) : FrameLayout(context, attrs, defStyle), OnboardingInteractor.OnboardingPresenter {
 
   private val _orderClicks: Relay<String> = PublishRelay.create()
   override val orderClicks: Observable<String>

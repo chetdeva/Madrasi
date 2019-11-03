@@ -24,6 +24,7 @@ class RootInteractor : Interactor<RootInteractor.RootPresenter, RootRouter>() {
   }
 
   inner class OnboardingListener : OnboardingInteractor.Listener {
+
     override fun order(phoneNumberInfo: PhoneNumberInfo) {
       router.detachOnboarding()
       router.attachOrder(phoneNumberInfo)

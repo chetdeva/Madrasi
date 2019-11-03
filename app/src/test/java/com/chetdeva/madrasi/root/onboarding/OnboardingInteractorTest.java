@@ -10,7 +10,7 @@ import org.mockito.MockitoAnnotations;
 
 public class OnboardingInteractorTest extends UberTestBase {
 
-  @Mock private OnboardingInteractor.LandingPresenter presenter;
+  @Mock private OnboardingInteractor.OnboardingPresenter presenter;
   @Mock private OnboardingRouter router;
 
   private OnboardingInteractor interactor;

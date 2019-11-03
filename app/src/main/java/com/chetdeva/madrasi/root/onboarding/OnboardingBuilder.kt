@@ -48,7 +48,7 @@ class OnboardingBuilder(dependency: ParentComponent) :
 
     @LandingScope
     @Binds
-    internal abstract fun presenter(view: OnboardingView): OnboardingInteractor.LandingPresenter
+    internal abstract fun presenter(view: OnboardingView): OnboardingInteractor.OnboardingPresenter
 
     @dagger.Module
     companion object {

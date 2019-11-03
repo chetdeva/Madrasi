@@ -10,7 +10,7 @@ import org.mockito.MockitoAnnotations
 
 class OnboardingInteractorTest : RibTestBasePlaceholder() {
 
-  @Mock internal lateinit var presenter: OnboardingInteractor.LandingPresenter
+  @Mock internal lateinit var presenter: OnboardingInteractor.OnboardingPresenter
   @Mock internal lateinit var router: OnboardingRouter
 
   private var interactor: OnboardingInteractor? = null
@@ -28,7 +28,7 @@ class OnboardingInteractorTest : RibTestBasePlaceholder() {
   @Test
   fun anExampleTest_withSomeConditions_shouldPass() {
     // Use InteractorHelper to drive your interactor's lifecycle.
-    InteractorHelper.attach<OnboardingInteractor.LandingPresenter, OnboardingRouter>(interactor!!, presenter, router, null)
+    InteractorHelper.attach<OnboardingInteractor.OnboardingPresenter, OnboardingRouter>(interactor!!, presenter, router, null)
     InteractorHelper.detach(interactor!!)
 
     throw RuntimeException("Remove this test and add real tests.")

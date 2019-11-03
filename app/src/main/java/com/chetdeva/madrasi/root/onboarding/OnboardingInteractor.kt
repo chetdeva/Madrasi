@@ -13,12 +13,12 @@ import javax.inject.Inject
  * Coordinates Business Logic for [LandingScope].
  */
 @RibInteractor
-class OnboardingInteractor : Interactor<OnboardingInteractor.LandingPresenter, OnboardingRouter>() {
+class OnboardingInteractor : Interactor<OnboardingInteractor.OnboardingPresenter, OnboardingRouter>() {
 
   private val disposable: CompositeDisposable by lazy { CompositeDisposable() }
 
   @Inject
-  lateinit var presenter: LandingPresenter
+  lateinit var presenter: OnboardingPresenter
   @Inject
   lateinit var listener: Listener
 
@@ -40,7 +40,7 @@ class OnboardingInteractor : Interactor<OnboardingInteractor.LandingPresenter, O
     disposable.dispose()
   }
 
-  interface LandingPresenter {
+  interface OnboardingPresenter {
     fun showEmptyPhoneNumberErrorMessage()
     val orderClicks: Observable<String>
   }
