@@ -11,6 +11,4 @@ class OnboardingRouter(
   component: OnboardingBuilder.Component
 ) :
   ViewRouter<OnboardingView, OnboardingInteractor, OnboardingBuilder.Component>(view, interactor, component) {
-
-  j
 }

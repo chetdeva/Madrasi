@@ -66,7 +66,6 @@ class OrderBuilder(dependency: ParentComponent) :
       }
 
       @OrderScope
-      @OrderInternal
       @Provides
       @JvmStatic
       internal fun cartStream(mutableCartStream: MutableCartStream): CartStream {
